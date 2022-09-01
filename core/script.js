@@ -20,10 +20,27 @@ function loadData() {
       if (txtFile.readyState === 4) {  // Makes sure the document is ready to parse.
         if (txtFile.status === 200) {  // Makes sure it's found the file.
           allText = txtFile.responseText;
-          lines = txtFile.responseText.split("\n"); // Will separate each line into an array
-          console.log(allText);
+          readCSV(allText);
         }
       }
     }
     txtFile.send(null);
 }
+
+let SONGS = [];
+let RANKS = {};
+
+function readCSV(content) {
+    let lines = content.split('\n');
+    // Class,Song,Artist,Genre,Reference
+    let titles = lines.splice(0,1)[0].split(',');
+    lines.forEach(line => {
+        if (line.slice(0,2)=='//') return;
+        let item = {};
+        line.split(',').forEach((value, index) => {
+            if (value[0]=='"') value = value.slice(1,-1); // remove double quote
+            item[titles[index]] = value;
+        });
+        SONGS.push(item);
+    });
+};
