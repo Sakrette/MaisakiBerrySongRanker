@@ -31,7 +31,7 @@ let SONGS = [];
 let RANKS = {};
 
 function readCSV(content) {
-    let lines = content.split('\n');
+    let lines = content.split('\r\n');
     // Class,Song,Artist,Genre,Reference
     let titles = lines.splice(0,1)[0].split(',');
     lines.forEach(line => {
