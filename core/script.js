@@ -38,7 +38,8 @@ function readCSV(content) {
         if (line.slice(0,2)=='//') return;
         let item = {};
         line.split(',').forEach((value, index) => {
-            if (value[0]=='"') value = value.slice(1,-1); // remove double quote
+            if (value[0]=='"' && value.slice(-1)=='"' ) value = value.slice(1,-1); // remove double quote
+            value = value.replaceAll('""', '"');
             item[titles[index]] = value;
         });
         SONGS.push(item);
